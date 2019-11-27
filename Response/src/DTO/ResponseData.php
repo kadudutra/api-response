@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Response\DTO;
 
 use JMS\Serializer\Annotation\Type;
+use Response\Filters\RequestFilters;
 
 class ResponseData
 {
@@ -16,7 +17,7 @@ class ResponseData
 
     /**
      * @var RequestFilters
-     * @Type("Response\DTO\RequestFilters")
+     * @Type("Response\Filters\RequestFilters")
      */
     private $params;
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Response;
 
-use Response\DTO\RequestFilters;
+use Response\Filters\RequestFilters;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\InjectContentTypeTrait;
 use Zend\Diactoros\Stream;

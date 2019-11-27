@@ -8,8 +8,8 @@ use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Serializer;
 use Psr\Container\ContainerInterface;
 use Response\DTO\Error;
-use Response\DTO\RequestFilters;
 use Response\DTO\ResponseData;
+use Response\Filters\RequestFilters;
 use Zend\Diactoros\Stream;
 
 /**
@@ -90,7 +90,7 @@ class CreateResponse
     {
         if (!is_array($data)) {
             $error = new Error();
-            $error->setMessageerror("An unexpected application error has occurred!");
+            $error->setMessageerror("Ocorreu um erro inesperado na aplicação!");
             $error->setInternalMessageError($data);
             $error->setInternalCodeError(-1);
             return [$error];
