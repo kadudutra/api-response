@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Response;
 
+use Http\StatusHttp;
 use Response\Filters\RequestFilters;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\InjectContentTypeTrait;
@@ -48,7 +49,7 @@ class ApiResponse extends Response
     private $body;
 
     public function __construct($data, ?int $statusCode = null,
-                                ?RequestFilters $params = null, bool $serializeNull = true,
+                                ?RequestFilters $params = null, bool $serializeNull = false,
                                 string $content = "application/json")
     {
         $this->data = $data;
@@ -66,6 +67,6 @@ class ApiResponse extends Response
      */
     private function checkStatusCode(?int $statusCode): int
     {
-        return (empty($statusCode) || $statusCode < 0) ? 500 : $statusCode;
+        return (empty($statusCode) || $statusCode < 0) ? StatusHttp::INTERNAL_SERVER_ERROR : $statusCode;
     }
 }
