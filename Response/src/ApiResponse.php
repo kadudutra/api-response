@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Response;
 
 use Http\StatusHttp;
+use Psr\Http\Message\ResponseInterface;
 use Response\Filters\RequestFilters;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\InjectContentTypeTrait;
@@ -19,7 +20,7 @@ use Zend\Diactoros\Stream;
  * @link <https://github.com/GustavoSantosBr/base-exception.git>
  * @author Gustavo Santos <gustavo.freze@gmail.com>
  */
-class ApiResponse extends Response
+class ApiResponse extends Response implements ResponseInterface
 {
     use InjectContentTypeTrait;
 
