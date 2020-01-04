@@ -8,7 +8,7 @@
 
 Para utilizar:
 ```bash
-composer require gustavosantos/base-exception
+composer require gustavosantos/api-response
 ```
 
 Retorno com sucesso:
