@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Response\DTO;
 
 use JMS\Serializer\Annotation\Type;
-use Response\Filters\RequestFilters;
 
+/**
+ * Class ResponseData
+ * @package Response\DTO
+ */
 class ResponseData
 {
     /**
@@ -16,8 +19,7 @@ class ResponseData
     private $statuscode;
 
     /**
-     * @var RequestFilters
-     * @Type("Response\Filters\RequestFilters")
+     * @var mixed
      */
     private $params;
 
@@ -48,17 +50,17 @@ class ResponseData
     }
 
     /**
-     * @return RequestFilters|null
+     * @return mixed
      */
-    public function getParams(): ?RequestFilters
+    public function getParams()
     {
         return $this->params;
     }
 
     /**
-     * @param RequestFilters|null $params
+     * @param $params
      */
-    public function setParams(?RequestFilters $params): void
+    public function setParams($params): void
     {
         $this->params = $params;
     }

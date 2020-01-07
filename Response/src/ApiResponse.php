@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Response;
 
 use Http\StatusHttp;
-use Psr\Http\Message\ResponseInterface;
-use Response\Filters\RequestFilters;
-use Zend\Diactoros\Response;
-use Zend\Diactoros\Response\InjectContentTypeTrait;
-use Zend\Diactoros\Stream;
+use Laminas\Diactoros\Response;
+use Laminas\Diactoros\Response\InjectContentTypeTrait;
+use Laminas\Diactoros\Stream;
 
 /**
  * API Response allows you to handle exceptions simply and custom.
@@ -20,7 +18,7 @@ use Zend\Diactoros\Stream;
  * @link <https://github.com/GustavoSantosBr/base-exception.git>
  * @author Gustavo Santos <gustavo.freze@gmail.com>
  */
-class ApiResponse extends Response implements ResponseInterface
+class ApiResponse extends Response
 {
     use InjectContentTypeTrait;
 
@@ -35,7 +33,7 @@ class ApiResponse extends Response implements ResponseInterface
     private $statusCode;
 
     /**
-     * @var RequestFilters|null
+     * @var mixed
      */
     private $params;
 
@@ -50,7 +48,7 @@ class ApiResponse extends Response implements ResponseInterface
     private $body;
 
     public function __construct($data, ?int $statusCode = null,
-                                ?RequestFilters $params = null, bool $serializeNull = false,
+                                $params = null, bool $serializeNull = false,
                                 string $content = "application/json")
     {
         $this->data = $data;

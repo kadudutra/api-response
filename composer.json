@@ -22,11 +22,12 @@
     "require": {
         "php": ">=7.3.6",
         "jms/serializer": "^3.3",
-        "zendframework/zend-diactoros": "^2.2",
-        "zendframework/zend-servicemanager": "^3.4",
         "gustavosantos/status-http": "^1.0",
         "doctrine/annotations": "^1.8",
-        "doctrine/common": "^2.11"
+        "doctrine/common": "^2.11",
+        "psr/container": "^1.0",
+        "laminas/laminas-diactoros": "^2.2",
+        "laminas/laminas-servicemanager": "^3.4"
     },
     "autoload": {
         "psr-4": {

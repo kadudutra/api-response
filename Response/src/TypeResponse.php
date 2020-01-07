@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Response;
 
+use Http\StatusHttp;
+
 /**
  * Class TypeResponse
  * @package Response
@@ -16,6 +18,6 @@ class TypeResponse
      */
     public static function getType(int $statusCode): bool
     {
-        return ($statusCode >= 200 && $statusCode <= 226);
+        return ($statusCode >= StatusHttp::OK && $statusCode <= StatusHttp::IM_USED);
     }
 }

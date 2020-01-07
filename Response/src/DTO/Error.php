@@ -6,6 +6,10 @@ namespace Response\DTO;
 
 use JMS\Serializer\Annotation\Type;
 
+/**
+ * Class Error
+ * @package Response\DTO
+ */
 class Error
 {
     /**

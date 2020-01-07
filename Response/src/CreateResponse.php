@@ -6,11 +6,10 @@ namespace Response;
 
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Serializer;
+use Laminas\Diactoros\Stream;
 use Psr\Container\ContainerInterface;
 use Response\DTO\Error;
 use Response\DTO\ResponseData;
-use Response\Filters\RequestFilters;
-use Zend\Diactoros\Stream;
 
 /**
  * Class CreateResponse
@@ -44,7 +43,7 @@ class CreateResponse
     private $statusCode;
 
     /**
-     * @var RequestFilters|null
+     * @var mixed
      */
     private $params;
 
@@ -58,7 +57,7 @@ class CreateResponse
      */
     private $serializationContext;
 
-    public function __construct($data, int $statusCode, ?RequestFilters $params = null, bool $serializeNull = true)
+    public function __construct($data, int $statusCode, $params = null, bool $serializeNull = true)
     {
         $this->data = $data;
         $this->statusCode = $statusCode;
