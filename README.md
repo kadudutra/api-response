@@ -6,12 +6,60 @@
  ApiResponse permite que você lide com respostas de requisições
  de maneira simples e personalizada.
 
-Para utilizar:
+## Instalação
+
+Execute o comando:
 ```bash
 composer require gustavosantos/api-response
 ```
+## Implementação
 
-Retorno com sucesso:
+- Em sua middleware ou handler, basta retornar o ***ApiResponse***.
+  
+  Exemplo de implementação em uma handler:
+     
+  ```php
+  <?php
+  
+  declare(strict_types=1);
+  
+  namespace Person\Handler;
+  
+  use Http\StatusHttp;
+  use Psr\Http\Message\ResponseInterface;
+  use Psr\Http\Message\ServerRequestInterface;
+  use Psr\Http\Server\RequestHandlerInterface;
+  use Response\ApiResponse;
+  use Exception;
+  use Person\PersonException;
+  
+  class PersonHandler implements RequestHandlerInterface
+  {
+      /**
+       * @param ServerRequestInterface $request
+       * @return ResponseInterface
+       */
+      public function handle(ServerRequestInterface $request): ResponseInterface
+      {
+          try {
+              return new ApiResponse("Sucesso!", StatusHttp::OK);
+          } catch (PersonException $e) {
+              return new ApiResponse($e->getCustomError(), $e->getCode());
+          } catch (Exception $e) {
+              return new ApiResponse($e->getMessage(), $e->getCode());
+          }
+      }
+  }
+  ```
+  
+- Para o retorno de exceções, você pode implementar [base-exception](https://github.com/GustavoSantosBr/base-exception.git)
+  o que lhe permite usar o método ***getCustomError***, o qual prove uma
+  implementação mais personalizada.
+- Exceções do tipo ***Exception***, use o método ***getMessage***
+
+## Retornos
+
+- Retorno de sucesso:
 ```json
 {
     "statuscode": 200,
@@ -19,7 +67,7 @@ Retorno com sucesso:
 }
 ```
 
-Retorno com erro:
+- Retorno de exceção:
 ```json
 {
     "statuscode": 400,  
@@ -32,3 +80,6 @@ Retorno com erro:
     ]
 }
 ```
+
+- Se os objetos dos retorno forem ***null***, eles não serão serializados
+por padrão. Para alterar, basta informar no construtor do ***ApiResponse***.
