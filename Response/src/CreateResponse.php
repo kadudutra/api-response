@@ -73,10 +73,12 @@ class CreateResponse
         $response = new ResponseData();
         $response->setStatuscode($this->statusCode);
         $response->setParams($this->params);
+
         if ((TypeResponse::getType($this->statusCode))) {
             $response->setData($this->data);
             return $response;
         }
+
         $response->setError($this->createError($this->data));
         return $response;
     }
