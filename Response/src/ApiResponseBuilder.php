@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Response;
 
-use Laminas\Diactoros\Stream;
 use Throwable;
 
 /**
@@ -31,12 +30,12 @@ class ApiResponseBuilder
     /**
      * @var bool
      */
-    private $serializeNull;
+    private $serializeNull = false;
 
     /**
      * @var string
      */
-    private $content;
+    private $content = "application/json";
 
     /**
      * @var Throwable
@@ -94,12 +93,12 @@ class ApiResponseBuilder
     }
 
     /**
-     * @param Stream $body
+     * @param string $content
      * @return ApiResponseBuilder
      */
-    public function setBody(Stream $body): ApiResponseBuilder
+    public function setContent(string $content): ApiResponseBuilder
     {
-        $this->body = $body;
+        $this->content = $content;
         return $this;
     }
 
