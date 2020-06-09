@@ -71,8 +71,11 @@ class CreateResponse
         if (!is_array($data)) {
             $error = new Error();
             $error->setMessageerror("Ocorreu um erro inesperado na aplicação!");
-            $error->setInternalMessageError($data);
             $error->setInternalCodeError(-1);
+
+            if (is_string($data)) {
+                $error->setInternalMessageError($data);
+            }
             return [$error];
         }
         return $data;

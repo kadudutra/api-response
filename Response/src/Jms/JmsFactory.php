@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Response\Jms;
 
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 use JMS\Serializer\Naming\SerializedNameAnnotationStrategy;
 use JMS\Serializer\SerializationContext;
@@ -13,10 +12,6 @@ use JMS\Serializer\SerializerInterface;
 
 class JmsFactory
 {
-    private const NAMESPACE = "Symfony\Component\Validator\Constraints";
-
-    private const DIRS = "/vendor/symfony/validator";
-
     private const FORMAT = "json";
 
     /**
@@ -26,15 +21,7 @@ class JmsFactory
 
     public function __construct()
     {
-        $this->registerLoader();
         $this->jms = $this->buildJms();
-    }
-
-    private function registerLoader(): void
-    {
-        $loader = require __DIR__ . "/../../../vendor/autoload.php";
-        AnnotationRegistry::registerLoader([$loader, "loadClass"]);
-        AnnotationRegistry::registerAutoloadNamespace(self::NAMESPACE, self::DIRS);
     }
 
     /**
