@@ -8,7 +8,6 @@ use Http\StatusHttp;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\InjectContentTypeTrait;
 use Laminas\Diactoros\Stream;
-use Throwable;
 
 /**
  * API Response allows you to handle exceptions simply and custom.
@@ -48,20 +47,14 @@ class ApiResponse extends Response
      */
     private $body;
 
-    /**
-     * @var Throwable|null
-     */
-    private $throwable;
-
     public function __construct($data, ?int $statusCode = null,
                                 $params = null, bool $serializeNull = false,
-                                string $content = "application/json", ?Throwable $throwable = null)
+                                string $content = "application/json")
     {
         $this->data = $data;
         $this->statusCode = $this->checkStatusCode($statusCode);
         $this->params = $params;
         $this->serializeNull = $serializeNull;
-        $this->throwable = $throwable;
         $this->body = (new CreateResponse($this->data, $this->statusCode, $this->params, $serializeNull))->getBody();
         parent::__construct($this->body, $this->statusCode, $this->injectContentType($content, []));
     }
@@ -74,13 +67,5 @@ class ApiResponse extends Response
     private function checkStatusCode(?int $statusCode): int
     {
         return (empty($statusCode) || $statusCode < 0) ? StatusHttp::INTERNAL_SERVER_ERROR : $statusCode;
-    }
-
-    /**
-     * @return Throwable|null
-     */
-    public function getThrowable(): ?Throwable
-    {
-        return $this->throwable;
     }
 }

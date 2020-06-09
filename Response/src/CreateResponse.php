@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Response;
 
 use JMS\Serializer\SerializationContext;
-use JMS\Serializer\Serializer;
 use Laminas\Diactoros\Stream;
-use Psr\Container\ContainerInterface;
 use Response\DTO\Error;
 use Response\DTO\ResponseData;
+use Response\Jms\JmsFactory;
 
 /**
  * Class CreateResponse
@@ -17,21 +16,6 @@ use Response\DTO\ResponseData;
  */
 class CreateResponse
 {
-    /**
-     * @var Stream
-     */
-    private $body;
-
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
-     * @var Serializer
-     */
-    private $jms;
-
     /**
      * @var mixed
      */
@@ -51,11 +35,6 @@ class CreateResponse
      * @var bool
      */
     private $serializeNull;
-
-    /**
-     * @var SerializationContext
-     */
-    private $serializationContext;
 
     public function __construct($data, int $statusCode, $params = null, bool $serializeNull = true)
     {
@@ -104,13 +83,12 @@ class CreateResponse
      */
     public function getBody(): Stream
     {
-        $this->container = require "config/container.php";
-        $this->jms = $this->container->get("serializer");
-        $this->serializationContext = (new SerializationContext())->setSerializeNull($this->serializeNull);
+        $jms = new JmsFactory();
+        $serializationContext = (new SerializationContext())->setSerializeNull($this->serializeNull);
 
-        $this->body = new Stream("php://temp", "wb+");
-        $this->body->write($this->jms->serialize($this->createResponse(), "json", $this->serializationContext));
-        $this->body->rewind();
-        return $this->body;
+        $body = new Stream("php://temp", "wb+");
+        $body->write($jms->serialize($this->createResponse(), $serializationContext));
+        $body->rewind();
+        return $body;
     }
 }
