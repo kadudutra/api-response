@@ -9,7 +9,13 @@ use JMS\Serializer\Naming\SerializedNameAnnotationStrategy;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializerInterface;
+use JMS\Serializer\Visitor\Factory\JsonDeserializationVisitorFactory;
+use JMS\Serializer\Visitor\Factory\JsonSerializationVisitorFactory;
 
+/**
+ * Class JmsFactory
+ * @package Response\Jms
+ */
 class JmsFactory
 {
     private const FORMAT = "json";
@@ -29,7 +35,15 @@ class JmsFactory
      */
     private function buildJms(): SerializerInterface
     {
+        $serializationVisitorFactory = new JsonSerializationVisitorFactory();
+        $serializationVisitorFactory->setOptions(JSON_UNESCAPED_UNICODE);
+
+        $deserializationVisitorFactory = new JsonDeserializationVisitorFactory();
+        $deserializationVisitorFactory->setOptions(JSON_UNESCAPED_UNICODE);
+
         return SerializerBuilder::create()
+            ->setSerializationVisitor(self::FORMAT, $serializationVisitorFactory)
+            ->setDeserializationVisitor(self::FORMAT, $deserializationVisitorFactory)
             ->setPropertyNamingStrategy(new SerializedNameAnnotationStrategy(new IdenticalPropertyNamingStrategy()))
             ->build();
     }
